@@ -1,4 +1,5 @@
-import { showToast } from '../../../main.js'
+// import { showToast } from '../../../main.js'
+import { showToast } from '../ui/toast.js';
 import { getActiveTagset, setActiveTagset } from '../tags/tagsetStore.js';
 import { initTagsetSelector } from '../tags/tagsetSelector.js';
 import { isValidLLTResponse } from '../xml/tokenizer.js';
