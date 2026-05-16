@@ -49,7 +49,7 @@ npm install
 ### Running the App
 
 Open the app from GitPages
-`https://cseseniordesign.github.io./`
+`https://cseseniordesign.github.io/unl-classics-alpheios-retooling/`
 
 ## OR
 
