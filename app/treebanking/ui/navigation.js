@@ -45,7 +45,11 @@ export function setupSentenceSelector() {
   setupUndoRedoHotkeys();
   setupSaveHotkey();
 
-  document.getElementById('file-name').textContent = localStorage.getItem("uploadedFileName") || "";
+  // document.getElementById('file-name').textContent = localStorage.getItem("uploadedFileName") || "";
+  const fileNameEl = document.getElementById('file-name');
+  if (fileNameEl) {
+    fileNameEl.textContent = localStorage.getItem("uploadedFileName") || "";
+  }
   localStorage.removeItem("uploadedFileName");
   
   const select = document.getElementById('sentence-select');
