@@ -25,6 +25,15 @@ import { showConfirmDialog } from './app/treebanking/ui/modal.js';
 import { setupQuestionsModal } from './app/treebanking/ui/questionsModal.js';
 import { setupCompareModal } from './app/treebanking/ui/compareModal.js';
 
+const isEditorPage =
+  document.getElementById("sentence-select") ||
+  document.getElementById("tokenized-sentence");
+
+if (!isEditorPage) {
+  console.log("Not on editor page; skipping editor initialization");
+  return;
+}
+
 window.handleFileUpload = handleFileUpload;
 window.batchSelection = new Set();
 window.selectorInputValue = "";
