@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="treebanking.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+    <script type="module" src="main.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <title>Arethusa Lite</title>
+</head>
+
+<body>
+    <div id="header">
+        <img src="/unl-classics-alpheios-retooling/assets/arethusa-small.png" alt="Arethusa Logo">
+
+        <div id="nav-buttons">
+            <span id="file-name" class="nav-label"></span>
+            <div class="nav-group">
+                <button id="first" class="nav-btn" title="First Sentence" onclick="safeDisplaySentence(1)">
+                <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M9 4 L3 16 L9 28 V4 M17 4 L11 16 L17 28 V4"/></svg>
+                </button>
+                <button id="back" class="nav-btn" title="Previous Sentence" onclick="safeDisplaySentence(window.currentIndex-1)">
+                <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M15 4 L7 16 L15 28 Z"/></svg>
+                </button>
+            </div>
+
+            <select id="sentence-select" title="Select Sentence" class="select"></select>
+
+            <div class="nav-group">
+                <button id="next" class="nav-btn" title="Next Sentence" onclick="safeDisplaySentence(window.currentIndex+1)">
+                <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M5 4 L13 16 L5 28 Z"/></svg>
+                </button>
+                <button id="last" class="nav-btn" title="Last Sentence" onclick="safeDisplaySentence(window.totalSentences)">
+                <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M3 4 L9 16 L3 28 V4 M11 4 L17 16 L11 28 V4"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="header-buttons">
+            <button id="save" title="Save" type="button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4zM12 19a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm3-10H5V5h10v4z"/>
+                </svg>
+            </button>
+            </button>
+            <button id="undo" title="Undo" type="button">
+                <svg viewBox="0 0 525 448">
+                    <path d="M448 384Q389 336 335 312 280 288 224 288L224 380 60 216 224 52 224 144Q320 166 374 222 428 277 448 384Z" />
+                </svg>
+            </button>
+            <button id="redo" title="Redo" type="button">
+                <svg viewBox="0 0 525 448">
+                    <path d="M448 384Q389 336 335 312 280 288 224 288L224 380 60 216 224 52 224 144Q320 166 374 222 428 277 448 384Z"
+                        transform="scale(-1,1) translate(-525,0)"/>
+                </svg>
+            </button>
+            
+            <button id="questions" title="Questions" type="button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 4C9.243 4 7 6.243 7 9h2c0-1.654 1.346-3 3-3s3 1.346 3 3c0 1.069-.454 1.465-1.481 2.255-.382.294-.813.626-1.226 1.038C10.981 13.604 10.995 14.897 11 15v2h2v-2.009c0-.024.023-.601.707-1.284.32-.32.682-.598 1.031-.867C15.798 12.024 17 11.1 17 9c0-2.757-2.243-5-5-5zm-1 14h2v2h-2z"/>
+                </svg>
+            </button>
+
+            <div id="questionsModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <iframe id="questionsFrame" src="questions.html"></iframe>
+                </div>
+            </div>
+
+            <button id="compare" title="Compare" type="button">
+                <svg fill="white" viewBox="-3 -3 38 38" id="icon" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M28,6H18V4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V24a2,2,0,0,0,2,2H14v2a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,15h6.17L7.59,17.59,9,19l5-5L9,9,7.59,10.41,10.17,13H4V4H16V24H4ZM16,28V26a2,2,0,0,0,2-2V8H28v9H21.83l2.58-2.59L23,13l-5,5,5,5,1.41-1.41L21.83,19H28v9Z" transform="translate(0)"></path>
+                    </g>
+                </svg>
+            </button>
+
+            <button id="exit-compare" title="Exit Compare Mode" type="button" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <button id="exit" title="Exit" type="button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z"/>                
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div id="body">
+        <div id="tree-view">
+            <div id="sentence">
+                <p id="tokenized-sentence"></p>
+                <p id="input-sentence"></p>
+            </div>
+            <div id="resize-handle"></div>
+            <div id="tree-bank">
+                <div id="tree-bar"> 
+                    <div id="selection-options"> 
+                        <button id="none" type="button">none</button> 
+                        <button id="unused" type="button">unused</button> 
+                        <button id="highlight" type="button">highlight</button>
+                    </div> 
+                    <div id="tree-options"> 
+                        <button id="compact" title="Condense view" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M10.38,13.08A1,1,0,0,0,10,13H6a1,1,0,0,0,0,2H7.59l-5.3,5.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L9,16.41V18a1,1,0,0,0,2,0V14a1,1,0,0,0-.08-.38A1,1,0,0,0,10.38,13.08ZM10,5A1,1,0,0,0,9,6V7.59L3.71,2.29A1,1,0,0,0,2.29,3.71L7.59,9H6a1,1,0,0,0,0,2h4a1,1,0,0,0,.38-.08,1,1,0,0,0,.54-.54A1,1,0,0,0,11,10V6A1,1,0,0,0,10,5Zm3.62,5.92A1,1,0,0,0,14,11h4a1,1,0,0,0,0-2H16.41l5.3-5.29a1,1,0,1,0-1.42-1.42L15,7.59V6a1,1,0,0,0-2,0v4a1,1,0,0,0,.08.38A1,1,0,0,0,13.62,10.92ZM16.41,15H18a1,1,0,0,0,0-2H14a1,1,0,0,0-.38.08,1,1,0,0,0-.54.54A1,1,0,0,0,13,14v4a1,1,0,0,0,2,0V16.41l5.29,5.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/>
+                            </svg>
+                        </button> 
+                        <button id="expand" title="Expand view" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9.29,13.29,4,18.59V17a1,1,0,0,0-2,0v4a1,1,0,0,0,.08.38,1,1,0,0,0,.54.54A1,1,0,0,0,3,22H7a1,1,0,0,0,0-2H5.41l5.3-5.29a1,1,0,0,0-1.42-1.42ZM5.41,4H7A1,1,0,0,0,7,2H3a1,1,0,0,0-.38.08,1,1,0,0,0-.54.54A1,1,0,0,0,2,3V7A1,1,0,0,0,4,7V5.41l5.29,5.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM21,16a1,1,0,0,0-1,1v1.59l-5.29-5.3a1,1,0,0,0-1.42,1.42L18.59,20H17a1,1,0,0,0,0,2h4a1,1,0,0,0,.38-.08,1,1,0,0,0,.54-.54A1,1,0,0,0,22,21V17A1,1,0,0,0,21,16Zm.92-13.38a1,1,0,0,0-.54-.54A1,1,0,0,0,21,2H17a1,1,0,0,0,0,2h1.59l-5.3,5.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L20,5.41V7a1,1,0,0,0,2,0V3A1,1,0,0,0,21.92,2.62Z"/>                            
+                            </svg>
+                        </button> 
+                        <button id="focus-root" title="Focus view on root" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M8,2H3A1,1,0,0,0,2,3V8A1,1,0,0,0,4,8V4H8A1,1,0,0,0,8,2ZM8,20H4V16a1,1,0,0,0-2,0v5a1,1,0,0,0,1,1H8a1,1,0,0,0,0-2ZM21,2H16a1,1,0,0,0,0,2h4V8a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Zm0,13a1,1,0,0,0-1,1v4H16a1,1,0,0,0,0,2h5a1,1,0,0,0,1-1V16A1,1,0,0,0,21,15Z"/>
+                            </svg>
+                        </button> 
+                        <button id="focus-selection" title="Focus view on selection" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M8,2H3A1,1,0,0,0,2,3V8A1,1,0,0,0,4,8V4H8A1,1,0,0,0,8,2ZM8,20H4V16a1,1,0,0,0-2,0v5a1,1,0,0,0,1,1H8a1,1,0,0,0,0-2ZM21,2H16a1,1,0,0,0,0,2h4V8a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Zm0,13a1,1,0,0,0-1,1v4H16a1,1,0,0,0,0,2h5a1,1,0,0,0,1-1V16A1,1,0,0,0,21,15Z"/>
+                                <circle cx="12" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </button> 
+                        <button id="center" title="Center view" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12,5a7,7,0,1,0,7,7A7,7,0,0,0,12,5Zm0,12a5,5,0,1,1,5-5A5,5,0,0,1,12,17Zm0-8a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13ZM12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/>
+                            </svg>
+                        </button> 
+                        <button id="table" title="Table view" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21,2H3C2.4,2,2,2.4,2,3v18c0,0.6,0.4,1,1,1h18c0.6,0,1-0.4,1-1V3C22,2.4,21.6,2,21,2z M10,20v-4h4v4H10z M10,14v-4h4v4H10z M4,10h4v4H4V10z M10,8V4h4v4H10z M16,10h4v4h-4V10z M20,8h-4V4h4V8z M8,4v4H4V4H8z M4,16h4v4H4V16z M16,20v-4h4v4H16z"/>
+                            </svg>
+                        </button> 
+                    </div> 
+                </div>
+                <div id="sandbox">
+                    <svg width="600" height="600"></svg>
+                </div>
+            </div>
+        </div>
+        <div id="tools">
+            <div id="toolbar">
+                <button id="morph" type="button">morph</button> 
+                <button id="relation" type="button">relation</button> 
+                <button id="aT" type="button">aT</button> 
+                <button id="selector" type="button">selector</button> 
+                <button id="sentence-tools" type="button">sentence</button> 
+                <button id="xml" type="button">xml</button>
+            </div>
+            <div id="tool-body">
+                <div id="morph-container"></div>
+
+                <!-- Compare mode sidebar panel -->
+                <div id="compare-mode-banner" class="sidebar-banner compare-mode" style="display:none;">
+                    <div class="banner-title">Compare Mode</div>
+                    <p style="margin: 0.3rem 0 0.6rem;">The tree is read-only while comparing against the instructor reference.</p>
+                    <button type="button" id="compare-mode-exit-link" class="compare-exit-btn">Exit Compare Mode</button>
+                </div>
+
+                <div id="treebank-mode-banner" class="sidebar-banner treebank-mode">
+                    <div class="banner-title">Treebanking – Change Head Mode</div>
+                    <p id="treebank-mode-instructions">
+                        Click a node in the tree to select a dependent, then click another node to set its head.
+                    </p>
+                    <div id="treebank-selected-node" class="selected-node-row hidden">
+                        <div class="label">Changing head for:</div>
+                        <div class="value">
+                            <span id="tb-node-token"></span>
+                            <span id="tb-node-meta"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="morph-container"></div>
+            </div>
+        </div>
+    <div id="toast"></div>
+    <div id="autosave-status"
+     style="position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: #222;
+            color: #fff;
+            padding: 16px 28px;
+            border-radius: 10px;
+            font: size 1.2em;
+            font-family: 'Segoe UI', sans-serif;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            opacity: 0;
+            transition:opacity 0.4s ease, transform 0.4s ease;
+            transform:translateY(20px);
+            z-index: 9999;">
+        Saved
+    </div>
+    <div id="app-modal-overlay" class="app-modal-overlay" hidden>
+        <div class="app-modal" role="dialog" aria-modal="true" aria-labelledby="app-modal-title">
+            <h2 id="app-modal-title" class="app-modal-title">Please confirm</h2>
+            <p id="app-modal-message" class="app-modal-message"></p>
+            <div class="app-modal-buttons">
+                <button type="button" id="app-modal-cancel" class="btn-secondary">
+                    Cancel
+                </button>
+                <button type="button" id="app-modal-ok" class="btn-primary">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Code Modal -->
+    <div id="compare-modal-overlay" class="app-modal-overlay" hidden>
+        <div class="app-modal" role="dialog" aria-modal="true" aria-labelledby="compare-modal-title">
+            <h2 id="compare-modal-title" class="app-modal-title">Enter Instructor Code</h2>
+            <p class="app-modal-message">Enter the 6-digit code provided by your instructor to load their reference tree.</p>
+            <div style="display:flex; justify-content:center; margin: 12px 0;">
+                <input
+                    id="compare-code-input"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="6"
+                    placeholder="000000"
+                    style="
+                        font-size: 1.6em;
+                        letter-spacing: 0.3em;
+                        text-align: center;
+                        width: 8em;
+                        padding: 8px 12px;
+                        border: 2px solid #555;
+                        border-radius: 6px;
+                        background: #1e1e1e;
+                        color: #fff;
+                        outline: none;
+                    "
+                />
+            </div>
+            <p id="compare-error-msg" style="color:#e05555; text-align:center; min-height:1.2em; margin:4px 0;"></p>
+            <div class="app-modal-buttons">
+                <button type="button" id="compare-modal-cancel" class="btn-secondary">Cancel</button>
+                <button type="button" id="compare-modal-ok" class="btn-primary">Load Tree</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

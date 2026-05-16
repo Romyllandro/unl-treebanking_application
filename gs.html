@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="gs.css">
+  <title>Arethusa – Compare Trees</title>
+</head>
+
+<body>
+  <div id="header">
+    <img src="../../assets/arethusa-small.png" alt="Arethusa Logo">
+
+    <!-- ── Shared navigation (sits in the header like treebanking.html) ── -->
+    <div id="nav-a" class="nav-block">
+      <span class="nav-label" id="label-a">Tree A</span>
+      <div class="nav-group">
+        <button class="nav-btn" data-tree="a" data-nav="first" title="First Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M9 4 L3 16 L9 28 V4 M17 4 L11 16 L17 28 V4"/></svg>
+        </button>
+        <button class="nav-btn" data-tree="a" data-nav="back" title="Previous Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M15 4 L7 16 L15 28 Z"/></svg>
+        </button>
+      </div>
+      <select class="sentence-select select" id="select-a"></select>
+      <div class="nav-group">
+        <button class="nav-btn" data-tree="a" data-nav="next" title="Next Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M5 4 L13 16 L5 28 Z"/></svg>
+        </button>
+        <button class="nav-btn" data-tree="a" data-nav="last" title="Last Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M3 4 L9 16 L3 28 V4 M11 4 L17 16 L11 28 V4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="nav-b" class="nav-block">
+      <span class="nav-label" id="label-b">Tree B</span>
+      <div class="nav-group">
+        <button class="nav-btn" data-tree="b" data-nav="first" title="First Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M9 4 L3 16 L9 28 V4 M17 4 L11 16 L17 28 V4"/></svg>
+        </button>
+        <button class="nav-btn" data-tree="b" data-nav="back" title="Previous Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M15 4 L7 16 L15 28 Z"/></svg>
+        </button>
+      </div>
+      <select class="sentence-select select" id="select-b"></select>
+      <div class="nav-group">
+        <button class="nav-btn" data-tree="b" data-nav="next" title="Next Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M5 4 L13 16 L5 28 Z"/></svg>
+        </button>
+        <button class="nav-btn" data-tree="b" data-nav="last" title="Last Sentence" disabled>
+          <svg viewBox="0 0 20 32" xmlns="http://www.w3.org/2000/svg"><path d="M3 4 L9 16 L3 28 V4 M11 4 L17 16 L11 28 V4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="header-buttons">
+      <button id="gsTable" title="Table view" type="button">
+          <svg viewBox="0 0 24 24">
+              <path d="M21,2H3C2.4,2,2,2.4,2,3v18c0,0.6,0.4,1,1,1h18c0.6,0,1-0.4,1-1V3C22,2.4,21.6,2,21,2z M10,20v-4h4v4H10z M10,14v-4h4v4H10z M4,10h4v4H4V10z M10,8V4h4v4H10z M16,10h4v4h-4V10z M20,8h-4V4h4V8z M8,4v4H4V4H8z M4,16h4v4H4V16z M16,20v-4h4v4H16z"/>
+          </svg>
+      </button> 
+      <button id="exit-btn" title="Exit" type="button">
+        <svg viewBox="0 0 24 24">
+          <path d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z"/>                
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+
+  <div id="body">
+    <div id="trees">
+
+      <!-- ── Tree A ─────────────────────────────────────────────────── -->
+      <div class="tree-panel" id="panel-a">
+        <div id="tree-bank-a">
+          <div class="tree-bar">
+            <div class="tree-options">
+              <button class="ctrl-btn" data-tree="a" data-action="compact" title="Condense view">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10.38,13.08A1,1,0,0,0,10,13H6a1,1,0,0,0,0,2H7.59l-5.3,5.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L9,16.41V18a1,1,0,0,0,2,0V14a1,1,0,0,0-.08-.38A1,1,0,0,0,10.38,13.08ZM10,5A1,1,0,0,0,9,6V7.59L3.71,2.29A1,1,0,0,0,2.29,3.71L7.59,9H6a1,1,0,0,0,0,2h4a1,1,0,0,0,.38-.08,1,1,0,0,0,.54-.54A1,1,0,0,0,11,10V6A1,1,0,0,0,10,5Zm3.62,5.92A1,1,0,0,0,14,11h4a1,1,0,0,0,0-2H16.41l5.3-5.29a1,1,0,1,0-1.42-1.42L15,7.59V6a1,1,0,0,0-2,0v4a1,1,0,0,0,.08.38A1,1,0,0,0,13.62,10.92ZM16.41,15H18a1,1,0,0,0,0-2H14a1,1,0,0,0-.38.08,1,1,0,0,0-.54.54A1,1,0,0,0,13,14v4a1,1,0,0,0,2,0V16.41l5.29,5.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/>
+                </svg>
+              </button>
+              <button class="ctrl-btn" data-tree="a" data-action="expand" title="Expand view">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9.29,13.29,4,18.59V17a1,1,0,0,0-2,0v4a1,1,0,0,0,.08.38,1,1,0,0,0,.54.54A1,1,0,0,0,3,22H7a1,1,0,0,0,0-2H5.41l5.3-5.29a1,1,0,0,0-1.42-1.42ZM5.41,4H7A1,1,0,0,0,7,2H3a1,1,0,0,0-.38.08,1,1,0,0,0-.54.54A1,1,0,0,0,2,3V7A1,1,0,0,0,4,7V5.41l5.29,5.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM21,16a1,1,0,0,0-1,1v1.59l-5.29-5.3a1,1,0,0,0-1.42,1.42L18.59,20H17a1,1,0,0,0,0,2h4a1,1,0,0,0,.38-.08,1,1,0,0,0,.54-.54A1,1,0,0,0,22,21V17A1,1,0,0,0,21,16Zm.92-13.38a1,1,0,0,0-.54-.54A1,1,0,0,0,21,2H17a1,1,0,0,0,0,2h1.59l-5.3,5.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L20,5.41V7a1,1,0,0,0,2,0V3A1,1,0,0,0,21.92,2.62Z"/>                            
+                </svg>
+              </button>
+              <button class="ctrl-btn" data-tree="a" data-action="focus-root" title="Focus view on root">
+                <svg viewBox="0 0 24 24">
+                  <path d="M8,2H3A1,1,0,0,0,2,3V8A1,1,0,0,0,4,8V4H8A1,1,0,0,0,8,2ZM8,20H4V16a1,1,0,0,0-2,0v5a1,1,0,0,0,1,1H8a1,1,0,0,0,0-2ZM21,2H16a1,1,0,0,0,0,2h4V8a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Zm0,13a1,1,0,0,0-1,1v4H16a1,1,0,0,0,0,2h5a1,1,0,0,0,1-1V16A1,1,0,0,0,21,15Z"/>
+                </svg>              
+              </button>
+              <button class="ctrl-btn" data-tree="a" data-action="center" title="Center view">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12,5a7,7,0,1,0,7,7A7,7,0,0,0,12,5Zm0,12a5,5,0,1,1,5-5A5,5,0,0,1,12,17Zm0-8a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13ZM12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/>
+                </svg>              
+              </button>
+            </div>
+          </div>
+          <div class="sandbox" id="sandbox-a">
+            <svg></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tree B ─────────────────────────────────────────────────── -->
+      <div class="tree-panel" id="panel-b">
+        <div id="tree-bank-b">
+          <div class="tree-bar">
+            <div class="tree-options">
+              <button class="ctrl-btn" data-tree="b" data-action="compact" title="Condense view">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10.38,13.08A1,1,0,0,0,10,13H6a1,1,0,0,0,0,2H7.59l-5.3,5.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L9,16.41V18a1,1,0,0,0,2,0V14a1,1,0,0,0-.08-.38A1,1,0,0,0,10.38,13.08ZM10,5A1,1,0,0,0,9,6V7.59L3.71,2.29A1,1,0,0,0,2.29,3.71L7.59,9H6a1,1,0,0,0,0,2h4a1,1,0,0,0,.38-.08,1,1,0,0,0,.54-.54A1,1,0,0,0,11,10V6A1,1,0,0,0,10,5Zm3.62,5.92A1,1,0,0,0,14,11h4a1,1,0,0,0,0-2H16.41l5.3-5.29a1,1,0,1,0-1.42-1.42L15,7.59V6a1,1,0,0,0-2,0v4a1,1,0,0,0,.08.38A1,1,0,0,0,13.62,10.92ZM16.41,15H18a1,1,0,0,0,0-2H14a1,1,0,0,0-.38.08,1,1,0,0,0-.54.54A1,1,0,0,0,13,14v4a1,1,0,0,0,2,0V16.41l5.29,5.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/>
+                </svg>
+              </button>
+              <button class="ctrl-btn" data-tree="b" data-action="expand" title="Expand view">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9.29,13.29,4,18.59V17a1,1,0,0,0-2,0v4a1,1,0,0,0,.08.38,1,1,0,0,0,.54.54A1,1,0,0,0,3,22H7a1,1,0,0,0,0-2H5.41l5.3-5.29a1,1,0,0,0-1.42-1.42ZM5.41,4H7A1,1,0,0,0,7,2H3a1,1,0,0,0-.38.08,1,1,0,0,0-.54.54A1,1,0,0,0,2,3V7A1,1,0,0,0,4,7V5.41l5.29,5.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM21,16a1,1,0,0,0-1,1v1.59l-5.29-5.3a1,1,0,0,0-1.42,1.42L18.59,20H17a1,1,0,0,0,0,2h4a1,1,0,0,0,.38-.08,1,1,0,0,0,.54-.54A1,1,0,0,0,22,21V17A1,1,0,0,0,21,16Zm.92-13.38a1,1,0,0,0-.54-.54A1,1,0,0,0,21,2H17a1,1,0,0,0,0,2h1.59l-5.3,5.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L20,5.41V7a1,1,0,0,0,2,0V3A1,1,0,0,0,21.92,2.62Z"/>                            
+                </svg>
+              </button>
+              <button class="ctrl-btn" data-tree="b" data-action="focus-root" title="Focus view on root">
+                <svg viewBox="0 0 24 24">
+                  <path d="M8,2H3A1,1,0,0,0,2,3V8A1,1,0,0,0,4,8V4H8A1,1,0,0,0,8,2ZM8,20H4V16a1,1,0,0,0-2,0v5a1,1,0,0,0,1,1H8a1,1,0,0,0,0-2ZM21,2H16a1,1,0,0,0,0,2h4V8a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2Zm0,13a1,1,0,0,0-1,1v4H16a1,1,0,0,0,0,2h5a1,1,0,0,0,1-1V16A1,1,0,0,0,21,15Z"/>
+                </svg>              
+              </button>
+              <button class="ctrl-btn" data-tree="b" data-action="center" title="Center view">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12,5a7,7,0,1,0,7,7A7,7,0,0,0,12,5Zm0,12a5,5,0,1,1,5-5A5,5,0,0,1,12,17Zm0-8a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13ZM12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z"/>
+                </svg>              
+              </button>
+            </div>
+          </div>
+          <div class="sandbox" id="sandbox-b">
+            <svg></svg>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- #trees -->
+  </div><!-- #body -->
+
+  <div id="table-bg">
+    <table>
+          <tr>
+            <th>
+            </th>
+            <th>
+              Total
+            </th>
+            <th>
+              Correct
+            </th>
+            <th>
+              Incorrect
+            </th>
+            <th>
+              Percent
+            </th>
+          </tr> 
+          <tr>
+            <td>Sentences</td>
+            <td id = "total-sentences"></td>
+            <td id = "right-sentences"></td>
+            <td id = "wrong-sentences"></td>
+            <td id = "unique-sentences"></td>
+          <tr>
+          <tr>
+            <td>Words</td>
+            <td id = "total-words"></td>
+            <td id = "right-words"></td>
+            <td id = "wrong-words"></td>
+            <td id = "unique-words"></td>
+          <tr>
+          <tr>
+            <td>Heads</td>
+            <td id = "total-heads"></td>
+            <td id = "right-heads"></td>
+            <td id = "wrong-heads"></td>
+            <td id = "unique-heads"></td>
+          <tr>
+          <tr>
+            <td>Relations</td>
+            <td id = "total-relations"></td>
+            <td id = "right-relations"></td>
+            <td id = "wrong-relations"></td>
+            <td id = "unique-relations"></td>
+          <tr>
+          <tr>
+            <td>Lemma</td>
+            <td id = "total-lemma"></td>
+            <td id = "right-lemma"></td>
+            <td id = "wrong-lemma"></td>
+            <td id = "unique-lemma"></td>
+          <tr>
+          <tr>
+            <td>Postags</td>
+            <td id = "total-postags"></td>
+            <td id = "right-postags"></td>
+            <td id = "wrong-postags"></td>
+            <td id = "unique-postags"></td>
+          <tr>
+        </table>
+        <div id="average-table">
+          <table>
+            <tr>
+              <td>Average (Heads,Relations,Lemma,Postags)</td>
+              <td id="average"></td>
+            </tr>
+          </table>
+          <div id="sentence-grid"></div>
+        </div>
+  </div>
+
+  <script>
+    const report = JSON.parse(localStorage.getItem('compareReport'));
+    const comparison = JSON.parse(localStorage.getItem('compareDetails'));
+    //sentence data insertion
+    document.getElementById('total-sentences').textContent = report.sentences.total;
+    document.getElementById('right-sentences').textContent = report.sentences.right;
+    document.getElementById('wrong-sentences').textContent = report.sentences.wrong;
+    document.getElementById('unique-sentences').textContent = (report.sentences.right/report.sentences.total).toFixed(4)  * 100 + "%";
+    //words data insertion 
+    document.getElementById('total-words').textContent = report.words.total;
+    document.getElementById('right-words').textContent = report.words.right;
+    document.getElementById('wrong-words').textContent = report.words.wrong;
+    document.getElementById('unique-words').textContent = (report.words.right/report.words.total).toFixed(4) * 100 + "%";
+    //heads data insertion 
+    document.getElementById('total-heads').textContent = report.heads.total;
+    document.getElementById('right-heads').textContent = report.heads.right;
+    document.getElementById('wrong-heads').textContent = report.heads.wrong;
+    document.getElementById('unique-heads').textContent = (report.heads.right/report.heads.total).toFixed(4) * 100 + "%";
+    //relations data insertion 
+    document.getElementById('total-relations').textContent = report.relations.total;
+    document.getElementById('right-relations').textContent = report.relations.right;
+    document.getElementById('wrong-relations').textContent = report.relations.wrong;
+    document.getElementById('unique-relations').textContent = (report.relations.right/report.relations.total).toFixed(4) * 100 + "%";
+    //Lemma data insertion 
+    document.getElementById('total-lemma').textContent = report.lemmata.total;
+    document.getElementById('right-lemma').textContent = report.lemmata.right;
+    document.getElementById('wrong-lemma').textContent = report.lemmata.wrong;
+    document.getElementById('unique-lemma').textContent = (report.lemmata.right/report.lemmata.total).toFixed(4) * 100 + "%";
+    //postags data insertion 
+    document.getElementById('total-postags').textContent = report.postags.total;
+    document.getElementById('right-postags').textContent = report.postags.right;
+    document.getElementById('wrong-postags').textContent = report.postags.wrong;
+    document.getElementById('unique-postags').textContent = (report.postags.right/report.postags.total).toFixed(4) * 100 + "%";
+    //average 
+    document.getElementById('average').textContent = 
+    ((((report.heads.right/report.heads.total)+
+    (report.relations.right/report.relations.total) +
+    (report.lemmata.right/report.lemmata.total) + (report.postags.right/report.postags.total))/4)*100).toFixed(2) + "%";
+
+   //get the sentences with issues
+    const problematicIds = comparison
+  .filter(sentence => {
+    //Check if the sentence is missing completely
+    if (sentence.missing) {
+      return true
+    }
+    //Check if any word in the sentence has any mismatch
+    return sentence.words.some(word => {
+      const hasHeadError    = word.gold.head !== word.review.head;
+      const hasRelationError = word.gold.relation !== word.review.relation;
+      const hasPostagError   = word.gold.postag !== word.review.postag;
+      const hasLemmaError    = word.gold.lemma !== word.review.lemma;
+      // If any of these are true, the whole sentence is flagged
+      return hasHeadError || hasRelationError || hasPostagError || hasLemmaError;
+    });
+  })
+  .map(s => s.sentenceId);
+    const selectA = document.getElementById("select-a")
+    const buttonsDiv = document.getElementById("sentence-grid");
+    const sentences = comparison.filter(s => {
+      const btn = document.createElement("button");
+      btn.classList.add("btn");
+      if (problematicIds.includes(s.sentenceId)) {
+        btn.classList.add("incorrectBtn");
+        btn.textContent = `${s.sentenceId}`;
+      }
+      else{
+        btn.textContent = `${s.sentenceId}`;
+        btn.classList.add("correctBtn");
+      }
+      btn.onclick = () => {
+        jumpToSentence(s.sentenceId);
+        window.scrollTo(0,0);
+      };
+      buttonsDiv.append(btn);
+      })
+    
+  </script></td>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="module" src="./app/treebanking/gs/gs.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="inputPage.css">
+  <title>Arethusa Lite</title>
+</head>
+
+<body>
+  <div id="header">
+    <img src="/unl-classics-alpheios-retooling/assets/arethusa-small.png" alt="Arethusa Logo">
+  </div>
+
+  <div id="body">
+    <div id="input-container">
+      <p>Input Text</p>
+      <div class="input-box">
+        <textarea class="input-text" title="Input Text" id="input-text" rows="10" cols="55" placeholder="Enter the text you want to treebank..." font="Arial"></textarea>
+      </div>
+      <div id="upload-XML">
+        <p>Upload Base XML Treebank</p>
+        <label class="file-label edit-button" for="file">
+          Choose File
+          <input type="file" id="file" accept=".xml" title="files" onchange="handleFileUpload()">
+        </label>
+        <span class="file-name" id="editTree">No file chosen</span>
+      </div>
+    </div>
+
+    <div id="input-manipulation">
+      <fieldset class="lang-btns">
+        <legend>Language</legend>
+        <input type="radio" id="lang-grc" name="lang" value="grc">
+        <label for="lang-grc">Greek</label>
+        <input type="radio" id="lang-lat" name="lang" value="lat">
+        <label for="lang-lat">Latin</label>
+        <input type="radio" id="lang-eng" name="lang" value="eng">
+        <label for="lang-eng">English</label>
+        <input type="radio" id="lang-per" name="lang" value="fas">
+        <label for="lang-per">Persian</label>
+      </fieldset>
+
+      <fieldset class="dir-btns">
+        <legend>Text Direction</legend>
+        <input type="radio" id="ltr" name="direction" value="ltr">
+        <label for="ltr">Left to Right</label>
+        <input type="radio" id="rtl" name="direction" value="rlt">
+        <label for="rtl">Right to Left</label>
+      </fieldset>
+
+      <button type="submit" class="edit-button" id="editBtn">Edit</button>
+
+      <div id="advanced-container">
+        <small id="toggleAdvanced">Click to toggle advanced options...</small>
+        <div id="advancedOptions" class="advanced-options">
+          <br>
+          <div id="tagset-selector-root"></div>
+          <p>Enter your own Tokenization Service URL:</p>
+          <div id="alternativeTokenizer" class="tokenizer-box">
+            <textarea id="tokenizer-URL" class="tokenizer-input" type="url" rows="1" cols="50" placeholder="Enter Custom Tokenizer URL..."></textarea>
+            <button id="saveTokenizer" class="save-default-btn">Save</button>
+            <button id="resetTokenizer" class="save-default-btn">Reset</button>
+          </div>
+          <p>Tokenization Parameters</p>
+          <div class="params-row">
+            <label for="split-enclitics">Split Enclitics</label>
+            <input type="checkbox" id="split-enclitics" checked>
+          </div>
+          <div class="params-row">
+            <label for="shift-enclitics">Shift Enclitics</label>
+            <input type="checkbox" id="shift-enclitics">
+          </div>
+          <br>
+          <p>Compare Two Treebanks</p>
+          <div class="compare-upload">
+            <span class="compare-label">Tree A</span>
+            <label class="edit-button file-label" for="compare-file-a">
+              Choose File
+              <input type="file" id="compare-file-a" accept=".xml" title="Tree A">
+            </label>
+            <span class="file-name" id="file-name-a">No file chosen</span>
+          </div>
+          <div class="compare-upload">
+            <span class="compare-label">Tree B</span>
+            <label class="edit-button file-label" for="compare-file-b">
+              Choose File
+              <input type="file" id="compare-file-b" accept=".xml" title="Tree B">
+            </label>
+            <span class="file-name" id="file-name-b">No file chosen</span>
+          </div>
+          <button class="compare-btn" id="compareBtn" type="button" title="Compare Trees" aria-label="Compare Trees">Compare</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+</body>
+<script type="module" src="/unl-classics-alpheios-retooling/app/treebanking/input/input.js"></script>
+<script type="module" src="/unl-classics-alpheios-retooling/app/treebanking/input/compare.js"></script>
+</html>
